@@ -12,6 +12,7 @@ RUN apt-get -y update && \
     zip
 
 #set rundeck password
+RUN groups | grep rundeck || groupadd rundeck && usermod -aG rundeck rundeck
 RUN echo 'rundeck:rundeck' | chpasswd
 
 USER rundeck
