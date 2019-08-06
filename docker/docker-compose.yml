@@ -27,8 +27,8 @@ services:
       - RUNDECK_DATABASE_USERNAME=rundeck
       - RUNDECK_DATABASE_PASSWORD=rundeck123.
     volumes:
-      - ${PWD}/data/bastion_id_rsa:/home/rundeck/.ssh/bastion_id_rsa
-      - ${PWD}/data/node_id_rsa:/home/rundeck/.ssh/node_id_rsa
+      - ./data/bastion_id_rsa:/home/rundeck/.ssh/bastion_id_rsa
+      - ./data/node_id_rsa:/home/rundeck/.ssh/node_id_rsa
     networks:
       - rundeck
   rundeck-ops:
@@ -45,8 +45,8 @@ services:
       - CONFIG_SCRIPT_POSTSTART=scripts/import_project.sh
       - PROJECTS_LIST=OpenSSH-Bastiondemo
     volumes:
-      - ${PWD}/projects:/projects
-      - ${PWD}/data:/data
+      - ./projects:/projects
+      - ./data:/data
     networks:
       - rundeck
   bastion:
@@ -58,8 +58,8 @@ services:
       - linux-1
       - linux-2
     volumes:
-    - ${PWD}/data/bastion_id_rsa:/home/rundeck/.ssh/id_rsa
-    - ${PWD}/data/bastion_id_rsa.pub:/home/rundeck/.ssh/id_rsa.pub
+    - ./data/bastion_id_rsa:/home/rundeck/.ssh/id_rsa
+    - ./data/bastion_id_rsa.pub:/home/rundeck/.ssh/id_rsa.pub
     networks:
       - rundeck
       - bastion
@@ -71,8 +71,8 @@ services:
     environment:
       - SSHD_PORT=2223
     volumes:
-    - ${PWD}/data/node_id_rsa:/home/rundeck/.ssh/id_rsa
-    - ${PWD}/data/node_id_rsa.pub:/home/rundeck/.ssh/id_rsa.pub
+    - ./data/node_id_rsa:/home/rundeck/.ssh/id_rsa
+    - ./data/node_id_rsa.pub:/home/rundeck/.ssh/id_rsa.pub
     networks:
       - bastion
   linux-2:
@@ -81,8 +81,8 @@ services:
     ports:
       - "22"
     volumes:
-    - ${PWD}/data/node_id_rsa:/home/rundeck/.ssh/id_rsa
-    - ${PWD}/data/node_id_rsa.pub:/home/rundeck/.ssh/id_rsa.pub
+    - ./data/node_id_rsa:/home/rundeck/.ssh/id_rsa
+    - ./data/node_id_rsa.pub:/home/rundeck/.ssh/id_rsa.pub
     networks:
       - bastion
 volumes:
